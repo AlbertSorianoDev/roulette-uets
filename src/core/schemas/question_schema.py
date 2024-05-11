@@ -1,6 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List, Optional
-from src.core.schemas.option_schema import OptionSchema
+from typing import Optional
 
 
 class QuestionSchema(BaseModel):
@@ -11,8 +10,6 @@ class QuestionSchema(BaseModel):
         id_subject (int): Subject ID
         question_text (str): Question text
         image (bytes): Image
-        subject (str): Subject name
-        options (list): List of options
 
     Returns:
         QuestionSchema: Question schema class
@@ -22,8 +19,6 @@ class QuestionSchema(BaseModel):
     id_subject: int = Field(ge=1)
     question_text: str = Field(min_length=1, max_length=510)
     image: Optional[bytes] = Field(default=None)
-    subject: Optional[str] = Field(default=None)
-    options: Optional[List[OptionSchema]] = Field(default=None)
 
     class Config:
         orm_mode = True

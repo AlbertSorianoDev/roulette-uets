@@ -1,6 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List, Optional
-from src.core.schemas.question_schema import QuestionSchema
+from typing import Optional
 
 
 class SubjectSchema(BaseModel):
@@ -9,7 +8,6 @@ class SubjectSchema(BaseModel):
     Args:
         id_subject (int): Subject ID
         name (str): Subject name
-        questions (list): List of questions
         question_count (int): Number of questions
 
     Returns:
@@ -18,7 +16,6 @@ class SubjectSchema(BaseModel):
 
     id_subject: int = Field(ge=1)
     name: str = Field(min_length=1, max_length=50)
-    questions: Optional[List[QuestionSchema]] = Field(default=None)
     question_count: Optional[int] = Field(default=None, ge=0)
 
     class Config:

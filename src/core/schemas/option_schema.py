@@ -1,6 +1,4 @@
 from pydantic import BaseModel, Field
-from typing import List, Optional
-from src.core.schemas.question_schema import QuestionSchema
 
 
 class OptionSchema(BaseModel):
@@ -20,7 +18,6 @@ class OptionSchema(BaseModel):
     id_question: int = Field(ge=1)
     option_text: str = Field(min_length=1, max_length=510)
     is_correct: bool = Field(default=False)
-    question: Optional[QuestionSchema] = Field(default=None)
 
     class Config:
         orm_mode = True
