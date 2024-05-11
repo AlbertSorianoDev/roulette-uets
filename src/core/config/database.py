@@ -14,5 +14,13 @@ engine = create_engine(
     )
 )
 
-Session = sessionmaker(bind=engine)
+SessionLocal = sessionmaker(autoflush=False, autocommit=False, bind=engine)
 Base = declarative_base()
+
+
+def get_session():
+    db_session = SessionLocal()
+    try:
+        yield db_session
+    finally:
+        db_session.close()
