@@ -20,7 +20,7 @@ class OptionModel(Base):
     __tablename__ = "option"
 
     id_option = Column(Integer, primary_key=True, nullable=False)
-    question_id = Column(Integer, ForeignKey("question.id_question"), nullable=False)
+    id_question = Column(Integer, ForeignKey("question.id_question"), nullable=False)
     option_text = Column(String(510), nullable=False)
     is_correct = Column(Boolean, nullable=False)
     question = relationship("QuestionModel", back_populates="options")
@@ -31,7 +31,7 @@ class OptionModel(Base):
     def model_to_dict(self) -> dict:
         return {
             "id_option": self.id_option,
-            "question_id": self.question_id,
+            "id_question": self.id_question,
             "option_text": self.option_text,
             "is_correct": self.is_correct,
         }
