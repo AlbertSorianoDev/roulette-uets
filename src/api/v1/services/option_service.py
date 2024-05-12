@@ -35,3 +35,10 @@ class OptionService:
             return None
 
         return new_option.id_option
+
+    def get_options_by_question_id(self, id_question: int) -> List[OptionModel]:
+        options = (
+            self.db_session.query(OptionModel).filter_by(id_question=id_question).all()
+        )
+
+        return [option.model_to_dict() for option in options]

@@ -61,3 +61,10 @@ class QuestionService:
         if question:
             return question.image
         return None
+
+    def get_question_by_subject_id(self, id_subject: int) -> List[QuestionModel]:
+        questions = (
+            self.db_session.query(QuestionModel).filter_by(id_subject=id_subject).all()
+        )
+
+        return [question.model_to_dict() for question in questions]
