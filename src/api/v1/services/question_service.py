@@ -33,13 +33,13 @@ class QuestionService:
         except SQLAlchemyError:
             return None
 
-        return new_question.id_question
+        return new_question.question_id
 
     def add_image_to_question(self, question_id, image_bytes):
         try:
             question = (
                 self.db_session.query(QuestionModel)
-                .filter_by(id_question=question_id)
+                .filter_by(question_id=question_id)
                 .first()
             )
             if question:
@@ -55,16 +55,16 @@ class QuestionService:
     def get_image_from_question(self, question_id):
         question = (
             self.db_session.query(QuestionModel)
-            .filter_by(id_question=question_id)
+            .filter_by(question_id=question_id)
             .first()
         )
         if question:
             return question.image
         return None
 
-    def get_question_by_subject_id(self, id_subject: int) -> List[QuestionModel]:
+    def get_question_by_subject_id(self, subject_id: int) -> List[QuestionModel]:
         questions = (
-            self.db_session.query(QuestionModel).filter_by(id_subject=id_subject).all()
+            self.db_session.query(QuestionModel).filter_by(subject_id=subject_id).all()
         )
 
         return [question.model_to_dict() for question in questions]

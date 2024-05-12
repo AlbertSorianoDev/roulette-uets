@@ -8,8 +8,8 @@ class QuestionModel(Base):
     """Question model class
 
     Args:
-        id_question (int): Question ID
-        id_subject (int): Subject ID
+        question_id (int): Question ID
+        subject_id (int): Subject ID
         question_text (str): Question text
         image_route (str): Image route
         subject (SubjectModel): Subject model
@@ -22,8 +22,8 @@ class QuestionModel(Base):
 
     __tablename__ = "question"
 
-    id_question = Column(Integer, primary_key=True, nullable=False)
-    id_subject = Column(Integer, ForeignKey(SubjectModel.id_subject), nullable=False)
+    question_id = Column(Integer, primary_key=True, nullable=False)
+    subject_id = Column(Integer, ForeignKey(SubjectModel.subject_id), nullable=False)
     question_text = Column(String(510), nullable=False)
     image = Column(LargeBinary)
     subject = relationship("SubjectModel", back_populates="questions")
@@ -42,8 +42,8 @@ class QuestionModel(Base):
 
     def model_to_dict(self, include_option_count=False) -> dict:
         data = {
-            "id_question": self.id_question,
-            "id_subject": self.id_subject,
+            "question_id": self.question_id,
+            "subject_id": self.subject_id,
             "question_text": self.question_text,
             "have_image": self.have_image,
         }

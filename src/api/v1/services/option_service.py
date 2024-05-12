@@ -34,11 +34,11 @@ class OptionService:
         except SQLAlchemyError:
             return None
 
-        return new_option.id_option
+        return new_option.option_id
 
-    def get_options_by_question_id(self, id_question: int) -> List[OptionModel]:
+    def get_options_by_question_id(self, question_id: int) -> List[OptionModel]:
         options = (
-            self.db_session.query(OptionModel).filter_by(id_question=id_question).all()
+            self.db_session.query(OptionModel).filter_by(question_id=question_id).all()
         )
 
         return [option.model_to_dict() for option in options]

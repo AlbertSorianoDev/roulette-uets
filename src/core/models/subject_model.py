@@ -7,7 +7,7 @@ class SubjectModel(Base):
     """Subjecy model class
 
     Args:
-        id_subject (int): Subject ID
+        subject_id(int): Subject ID
         name (str): Subject name
         questions (list): List of questions
         question_count (int): Number of questions
@@ -18,7 +18,7 @@ class SubjectModel(Base):
 
     __tablename__ = "subject"
 
-    id_subject = Column(Integer, primary_key=True, nullable=False)
+    subject_id = Column(Integer, primary_key=True, nullable=False)
     name = Column(String(50), nullable=False)
     questions = relationship("QuestionModel", back_populates="subject")
 
@@ -31,7 +31,7 @@ class SubjectModel(Base):
 
     def model_to_dict(self, include_question_count=False) -> dict:
         data = {
-            "id_subject": self.id_subject,
+            "subject_id": self.subject_id,
             "name": self.name,
         }
 
