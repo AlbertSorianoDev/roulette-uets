@@ -29,11 +29,11 @@ async def add_question(
 
     if result:
         return JSONResponse(
-            content={"ok": True, "id_question": result},
+            content={"ok": True, "question_id": result},
             status_code=201,
         )
     else:
-        return JSONResponse(content={"ok": False, "id_question": None}, status_code=400)
+        return JSONResponse(content={"ok": False, "question_id": None}, status_code=400)
 
 
 @question_router.put("/image/{question_id}")
@@ -73,11 +73,11 @@ async def get_image_from_question(
         raise HTTPException(status_code=404, detail="Image not found")
 
 
-@question_router.get("/{id_subject}", response_model=List[QuestionSchema])
+@question_router.get("/{subject_id}", response_model=List[QuestionSchema])
 async def get_question_by_subject_id(
-    id_subject: int, db_session: Session = Depends(get_session)
+    subject_id: int, db_session: Session = Depends(get_session)
 ):
     service = QuestionService(db_session)
-    result = service.get_question_by_subject_id(id_subject)
+    result = service.get_question_by_subject_id(subject_id)
 
     return JSONResponse(content=result, status_code=200)

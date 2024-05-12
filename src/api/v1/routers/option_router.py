@@ -27,17 +27,17 @@ async def add_option(
     result = service.add_option(option)
 
     if result:
-        return JSONResponse(content={"ok": True, "id_option": result}, status_code=201)
+        return JSONResponse(content={"ok": True, "option_id": result}, status_code=201)
     else:
-        return JSONResponse(content={"ok": False, "id_option": None}, status_code=400)
+        return JSONResponse(content={"ok": False, "option_id": None}, status_code=400)
 
 
-@option_router.get("/{id_question}", response_model=List[OptionSchema])
+@option_router.get("/{question_id}", response_model=List[OptionSchema])
 def get_options_by_question_id(
-    id_question: int,
+    question_id: int,
     db_session: Session = Depends(get_session),
 ):
     service = OptionService(db_session)
-    result = service.get_options_by_question_id(id_question)
+    result = service.get_options_by_question_id(question_id)
 
     return JSONResponse(content=result, status_code=200)

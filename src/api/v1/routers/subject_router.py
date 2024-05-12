@@ -27,6 +27,6 @@ async def add_subject(
     result = service.add_subject(subject)
 
     if result:
-        return JSONResponse(content={"ok": True, "id_subject": result}, status_code=201)
+        return JSONResponse(content={"ok": True, "subject_id": result}, status_code=201)
     else:
-        return JSONResponse(content={"ok": False, "id_subject": None}, status_code=400)
+        return JSONResponse(content={"ok": False, "subject_id": None}, status_code=400)

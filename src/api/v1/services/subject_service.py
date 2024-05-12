@@ -35,4 +35,4 @@ class SubjectService:
         except SQLAlchemyError:
             return None
 
-        return new_subject.id_subject
+        return new_subject.subject_id
