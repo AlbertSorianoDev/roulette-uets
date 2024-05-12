@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 from src.core.config.database import Base, engine
 from src.api.v1.routers.main_router import api_v1_router
@@ -7,6 +8,14 @@ from src.api.v1.routers.main_router import api_v1_router
 app = FastAPI()
 app.title = "Roulette UETS Service"
 app.version = "0.0.1"
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(api_v1_router)
 
