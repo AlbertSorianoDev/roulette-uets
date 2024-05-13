@@ -2,7 +2,7 @@ from typing import List
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 
-from src.core.schemas.game_schema import GameCreateSchema, GameSchema
+from src.core.schemas.game_schema import GameCreateSchema, GameSchema, GameScoresSchema
 from src.core.models.game_model import GameModel
 from src.core.models.record_model import RecordModel
 
@@ -57,3 +57,28 @@ class GameService:
             return None
 
         return self.game_with_records(new_game)
+
+    def get_game_scores(self, game_id: str) -> GameScoresSchema | None:
+        game = (
+            self.db_session.query(GameModel)
+            .filter(GameModel.game_id == game_id)
+            .first()
+        )
+
+        scores = []
+
+        for record in game.records:
+            participant = record.participant
+            score = record.score
+
+            score_dict = {
+                "participant_id": str(participant.participant_id),
+                "score": score,
+            }
+
+            scores.append(score_dict)
+
+        return {
+            "game_id": str(game_id),
+            "scores": scores,
+        }

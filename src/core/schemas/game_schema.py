@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List, Dict
 from uuid import UUID
 
 
@@ -48,6 +48,32 @@ class GameSchema(GameCreateSchema):
                 "records": [
                     "123e4567-e89b-12d3-a456-426614174000",
                     "123e4567-e89b-12d3-a456-426614174001",
+                ],
+            }
+        }
+
+
+class GameScoresSchema(BaseModel):
+    """Game scores schema class
+    Args:
+        game_id (uuid): Game unique identifier
+        scores (list): List of scores
+    Returns:
+        GameScoresSchema: Game scores schema class
+    """
+
+    game_id: UUID = Field(..., min_length=36, max_length=36)
+    scores: List[Dict[str, str | int]] = []
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "game_id": "123e4567-e89b-12d3-a456-426614174000",
+                "scores": [
+                    {
+                        "participant_id": "123e4567-e89b-12d3-a456-426614174000",
+                        "score": 100,
+                    }
                 ],
             }
         }
