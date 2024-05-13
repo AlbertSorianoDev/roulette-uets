@@ -1,10 +1,12 @@
 from typing import List
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
+from uuid import UUID
 
 from src.core.schemas.answer_schema import AnswerCreateSchema
 from src.core.models.answer_model import AnswerModel
 from src.core.models.record_model import RecordModel
+from src.core.models.option_model import OptionModel
 
 
 class AnswerService:
@@ -20,8 +22,10 @@ class AnswerService:
     def __init__(self, db_session: Session) -> None:
         self.db_session = db_session
 
-    def get_answers(self) -> List[dict]:
-        answers = self.db_session.query(AnswerModel).all()
+    def get_answers_by_record(self, record_id: UUID) -> List[dict]:
+        answers = (
+            self.db_session.query(AnswerModel).filter_by(record_id=record_id).all()
+        )
 
         return [answer.model_to_dict() for answer in answers]
 
@@ -36,7 +40,11 @@ class AnswerService:
                 answer.record_id
             )
 
-            if answer.is_correct:
+            option_model: OptionModel = self.db_session.query(OptionModel).get(
+                answer.option_id
+            )
+
+            if option_model.is_correct:
                 record_model.score += 1
 
                 self.db_session.flush()

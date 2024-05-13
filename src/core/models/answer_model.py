@@ -31,5 +31,5 @@ class AnswerModel(Base):
         return {
             "answer_id": self.answer_id,
             "option_id": self.option_id,
-            "record_id": self.record_id,
+            "record_id": str(self.record_id),
         }
