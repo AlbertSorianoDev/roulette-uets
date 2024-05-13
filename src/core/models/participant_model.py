@@ -1,3 +1,5 @@
+import uuid
+
 from sqlalchemy import Column, UUID, String
 from sqlalchemy.orm import relationship
 from src.core.config.database import Base
@@ -17,7 +19,12 @@ class ParticipantModel(Base):
 
     __tablename__ = "participant"
 
-    participant_id = Column(UUID(as_uuid=True), primary_key=True, nullable=False)
+    participant_id = Column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        nullable=False,
+        default=uuid.uuid4,
+    )
     name = Column(String(50), nullable=True)
 
     records = relationship("RecordModel", back_populates="participant")
@@ -26,4 +33,4 @@ class ParticipantModel(Base):
         return f"<Participant(name={self.name})>"
 
     def model_to_dict(self) -> dict:
-        return {"participant_id": self.participant_id, "name": self.name}
+        return {"participant_id": str(self.participant_id), "name": self.name}

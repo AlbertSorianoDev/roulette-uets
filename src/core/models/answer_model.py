@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer
+from sqlalchemy import Column, ForeignKey, Integer, UUID
 from sqlalchemy.orm import relationship
 from src.core.config.database import Base
 
@@ -20,7 +20,7 @@ class AnswerModel(Base):
 
     answer_id = Column(Integer, primary_key=True, nullable=False)
     option_id = Column(Integer, ForeignKey("option.option_id"), nullable=False)
-    record_id = Column(Integer, ForeignKey("record.record_id"), nullable=False)
+    record_id = Column(UUID, ForeignKey("record.record_id"), nullable=False)
 
     record = relationship("RecordModel", back_populates="answers")
 

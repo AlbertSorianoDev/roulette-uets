@@ -35,7 +35,7 @@ class PeriodModel(Base):
         return {
             "period_id": self.period_id,
             "name": self.name,
-            "init_date": self.init_date,
-            "end_date": self.end_date,
+            "init_date": self.init_date.isoformat() if self.init_date else None,
+            "end_date": self.end_date.isoformat() if self.end_date else None,
             "comment": self.comment,
         }

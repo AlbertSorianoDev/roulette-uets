@@ -37,7 +37,7 @@ class RecordModel(Base):
 
     game = relationship("GameModel", back_populates="records")
     participant = relationship("ParticipantModel", back_populates="records")
-    anwers = relationship("AnswerModel", back_populates="record")
+    answers = relationship("AnswerModel", back_populates="record")
 
     def __repr__(self) -> str:
         return f"<Record(score={self.score})>"
