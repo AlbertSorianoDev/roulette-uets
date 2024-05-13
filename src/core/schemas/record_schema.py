@@ -33,3 +33,42 @@ class RecordSchema(BaseModel):
                 "score": 100,
             }
         }
+
+
+class RecordGameRequestSchema(BaseModel):
+    """Record game request schema class
+    Args:
+        game_id (str): Game unique identifier
+    Returns:
+        RecordGameRequestSchema: Record game request schema class
+    """
+
+    game_id: UUID = Field(..., min_length=36, max_length=36)
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "game_id": "123e4567-e89b-12d3-a456-426614174000",
+            }
+        }
+
+
+class RecordGameParticipantRequestSchema(BaseModel):
+    """Record game participant request schema class
+    Args:
+        game_id (str): Game unique identifier
+        participant_id (str): Participant unique identifier
+    Returns:
+        RecordGameParticipantRequestSchema: Record game participant request schema class
+    """
+
+    game_id: UUID = Field(..., min_length=36, max_length=36)
+    participant_id: UUID = Field(..., min_length=36, max_length=36)
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "game_id": "123e4567-e89b-12d3-a456-426614174000",
+                "participant_id": "123e4567-e89b-12d3-a456-426614174000",
+            }
+        }
