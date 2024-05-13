@@ -27,6 +27,14 @@ class ParticipantService:
 
         return [participant.model_to_dict() for participant in participants]
 
+    def get_participant(self, participant_id: int) -> ParticipantSchema | None:
+        participant = self.db_session.query(ParticipantModel).get(participant_id)
+
+        if not participant:
+            return None
+
+        return participant.model_to_dict()
+
     def add_participant(
         self,
         participant: ParticipantCreateSchema,

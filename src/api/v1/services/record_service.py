@@ -26,8 +26,10 @@ class RecordService:
         return [record.model_to_dict() for record in records]
 
     def get_record_by_game_id_and_participant_id(
-        self, game_id: UUID, participant_id: UUID
-    ) -> RecordModel:
+        self,
+        game_id: UUID,
+        participant_id: UUID,
+    ) -> RecordModel | None:
         record = (
             self.db_session.query(RecordModel)
             .filter_by(game_id=game_id, participant_id=participant_id)

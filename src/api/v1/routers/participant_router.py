@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from typing import List, Optional
 from sqlalchemy.orm import Session
+from uuid import UUID
 
 from src.core.config.database import get_session
 from src.core.schemas.participant_schema import (
@@ -17,6 +18,17 @@ participant_router = APIRouter(prefix="/participants", tags=["Participants"])
 async def get_participants(db_session: Session = Depends(get_session)):
     service = ParticipantService(db_session)
     result = service.get_participants()
+
+    return JSONResponse(content=result, status_code=200)
+
+
+@participant_router.get("/{participant_id}", response_model=Optional[ParticipantSchema])
+async def get_participant(
+    participant_id: UUID,
+    db_session: Session = Depends(get_session),
+):
+    service = ParticipantService(db_session)
+    result = service.get_participant(participant_id)
 
     return JSONResponse(content=result, status_code=200)
 
