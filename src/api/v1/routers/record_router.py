@@ -22,7 +22,7 @@ async def get_records_by_game_id(
     return JSONResponse(content=result, status_code=200)
 
 
-@record_router.get("/particpant_game", response_model=Optional[RecordSchema])
+@record_router.get("/participant_game", response_model=Optional[RecordSchema])
 async def get_record_by_game_id_and_participant_id(
     game_id: UUID,
     participant_id: UUID,
