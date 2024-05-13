@@ -20,7 +20,7 @@ class RecordService:
     def __init__(self, db_session: Session) -> None:
         self.db_session = db_session
 
-    def get_records_by_game_id(self, game_id: UUID) -> List[RecordModel]:
+    def get_records_by_game_id(self, game_id: UUID) -> List[dict]:
         records = self.db_session.query(RecordModel).filter_by(game_id=game_id).all()
 
         return [record.model_to_dict() for record in records]
@@ -29,7 +29,7 @@ class RecordService:
         self,
         game_id: UUID,
         participant_id: UUID,
-    ) -> RecordModel | None:
+    ) -> dict | None:
         record = (
             self.db_session.query(RecordModel)
             .filter_by(game_id=game_id, participant_id=participant_id)
@@ -37,3 +37,20 @@ class RecordService:
         )
 
         return record.model_to_dict() if record else None
+
+    def add_challenge_point(self, record_id: UUID) -> dict | None:
+        try:
+            record: RecordModel = self.db_session.query(RecordModel).get(record_id)
+
+            if not record:
+                return None
+
+            record.challenge_points += 1
+
+            self.db_session.commit()
+
+        except SQLAlchemyError:
+            self.db_session.rollback()
+            return None
+
+        return record.model_to_dict()

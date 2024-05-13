@@ -31,5 +31,6 @@ class RecordSchema(BaseModel):
                 "call_help": True,
                 "audience_help": True,
                 "score": 100,
+                "challenge_points": 10,
             }
         }

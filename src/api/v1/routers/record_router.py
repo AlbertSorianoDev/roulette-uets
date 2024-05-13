@@ -32,3 +32,17 @@ async def get_record_by_game_id_and_participant_id(
     result = service.get_record_by_game_id_and_participant_id(game_id, participant_id)
 
     return JSONResponse(content=result, status_code=200)
+
+
+@record_router.put(
+    "/add_challenge_point/{record_id}",
+    response_model=Optional[RecordSchema],
+)
+async def add_challenge_point(
+    record_id: UUID,
+    db_session: Session = Depends(get_session),
+):
+    service = RecordService(db_session)
+    result = service.add_challenge_point(record_id)
+
+    return JSONResponse(content=result, status_code=200)
