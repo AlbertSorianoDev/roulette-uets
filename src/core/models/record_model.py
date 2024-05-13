@@ -1,3 +1,5 @@
+import uuid
+
 from sqlalchemy import Column, ForeignKey, Integer, Boolean, UUID
 from sqlalchemy.orm import relationship
 from src.core.config.database import Base
@@ -23,17 +25,22 @@ class RecordModel(Base):
 
     __tablename__ = "record"
 
-    record_id = Column(UUID(as_uuid=True), primary_key=True, nullable=False)
+    record_id = Column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        nullable=False,
+        default=uuid.uuid4,
+    )
     participant_id = Column(
         UUID(as_uuid=True),
         ForeignKey("participant.participant_id"),
         nullable=False,
     )
     game_id = Column(UUID(as_uuid=True), ForeignKey("game.game_id"), nullable=False)
-    fifty_fifty_help = Column(Boolean, nullable=True)
-    call_help = Column(Boolean, nullable=True)
-    audience_help = Column(Boolean, nullable=True)
-    score = Column(Integer, nullable=True)
+    fifty_fifty_help = Column(Boolean, nullable=False, default=True)
+    call_help = Column(Boolean, nullable=False, default=True)
+    audience_help = Column(Boolean, nullable=False, default=True)
+    score = Column(Integer, nullable=False, default=0)
 
     game = relationship("GameModel", back_populates="records")
     participant = relationship("ParticipantModel", back_populates="records")
@@ -44,9 +51,9 @@ class RecordModel(Base):
 
     def model_to_dict(self) -> dict:
         return {
-            "record_id": self.record_id,
-            "participant_id": self.participant_id,
-            "game_id": self.game_id,
+            "record_id": str(self.record_id),
+            "participant_id": str(self.participant_id),
+            "game_id": str(self.game_id),
             "fifty_fifty_help": self.fifty_fifty_help,
             "call_help": self.call_help,
             "audience_help": self.audience_help,
