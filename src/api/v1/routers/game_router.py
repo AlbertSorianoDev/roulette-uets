@@ -33,7 +33,7 @@ async def add_game(
         return JSONResponse(content=None, status_code=400)
 
 
-@game_router.get("scores/{game_id}", response_model=GameScoresSchema)
+@game_router.get("/scores/{game_id}", response_model=GameScoresSchema)
 async def get_game_scores(
     game_id: UUID,
     db_session: Session = Depends(get_session),

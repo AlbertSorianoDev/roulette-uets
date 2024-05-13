@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from uuid import UUID
 
 
 class AnswerCreateSchema(BaseModel):
@@ -10,19 +11,19 @@ class AnswerCreateSchema(BaseModel):
         AnswerCreateSchema: Answer create schema class
     """
 
-    question_id: int = Field(..., ge=1)
-    answer: str = Field(min_length=1, max_length=255)
+    option_id: int = Field(ge=1)
+    record_id: UUID
 
     class Config:
         json_schema_extra = {
             "example": {
-                "question_id": 1,
-                "answer": "This is an answer",
+                "option_id": 1,
+                "record_id": "123e4567-e89b-12d3-a456-426614174000",
             }
         }
 
 
-class AnswerSchema(BaseModel):
+class AnswerSchema(AnswerCreateSchema):
     """Answer schema class
     Args:
         answer_id (int): Answer ID
@@ -38,7 +39,7 @@ class AnswerSchema(BaseModel):
         json_schema_extra = {
             "example": {
                 "answer_id": 1,
-                "question_id": 1,
-                "answer": "This is an answer",
+                "option_id": 1,
+                "record_id": "123e4567-e89b-12d3-a456-426614174000",
             }
         }

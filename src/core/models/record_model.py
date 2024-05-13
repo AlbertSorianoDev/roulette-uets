@@ -16,6 +16,8 @@ class RecordModel(Base):
         call_help (bool): Call help
         audience_help (bool): Audience help
         score (int): Score
+        challenge_points (int): Challenge points
+
         game (GameModel): Game object
         participant (ParticipantModel): Participant object
 
@@ -41,6 +43,7 @@ class RecordModel(Base):
     call_help = Column(Boolean, nullable=False, default=True)
     audience_help = Column(Boolean, nullable=False, default=True)
     score = Column(Integer, nullable=False, default=0)
+    challenge_points = Column(Integer, nullable=False, default=0)
 
     game = relationship("GameModel", back_populates="records")
     participant = relationship("ParticipantModel", back_populates="records")
@@ -58,4 +61,5 @@ class RecordModel(Base):
             "call_help": self.call_help,
             "audience_help": self.audience_help,
             "score": self.score,
+            "challenge_points": self.challenge_points,
         }
