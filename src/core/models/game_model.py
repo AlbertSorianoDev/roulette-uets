@@ -1,3 +1,5 @@
+import uuid
+
 from sqlalchemy import UUID, Column, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 from src.core.config.database import Base
@@ -19,7 +21,12 @@ class GameModel(Base):
 
     __tablename__ = "game"
 
-    game_id = Column(UUID(as_uuid=True), primary_key=True, nullable=False)
+    game_id = Column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        nullable=False,
+        default=uuid.uuid4,
+    )
     period_id = Column(Integer, ForeignKey("period.period_id"), nullable=False)
     rounds = Column(Integer, nullable=False)
 
@@ -31,7 +38,7 @@ class GameModel(Base):
 
     def model_to_dict(self) -> dict:
         return {
-            "game_id": self.game_id,
+            "game_id": str(self.game_id),
             "period_id": self.period_id,
             "rounds": self.rounds,
         }
