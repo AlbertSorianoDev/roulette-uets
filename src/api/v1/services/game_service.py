@@ -68,8 +68,10 @@ class GameService:
         scores = []
 
         for record in game.records:
+            record: RecordModel
+
             participant = record.participant
-            score = record.score
+            score = record.score + record.challenge_points
 
             score_dict = {
                 "participant_id": str(participant.participant_id),
