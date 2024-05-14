@@ -35,7 +35,7 @@ async def get_record_by_game_id_and_participant_id(
 
 
 @record_router.put(
-    "/add_challenge_point/{record_id}",
+    "/add_challenge_point",
     response_model=Optional[RecordSchema],
 )
 async def add_challenge_point(
