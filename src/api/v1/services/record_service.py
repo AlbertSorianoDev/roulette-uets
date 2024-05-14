@@ -54,3 +54,33 @@ class RecordService:
             return None
 
         return record.model_to_dict()
+
+    def comodindindin(self, record_id: UUID, comodindindin: int) -> dict | None:
+        try:
+            record: RecordModel = self.db_session.query(RecordModel).get(record_id)
+
+            if not record or comodindindin not in range(3):
+                return None
+
+            self.db_session.flush()
+
+            match comodindindin:
+                case 0:
+                    record.audience_help = False
+                case 1:
+                    record.fifty_fifty_help = False
+                case 2:
+                    record.call_help = False
+
+            self.db_session.commit()
+
+        except SQLAlchemyError:
+            self.db_session.rollback()
+            return None
+
+        return record.model_to_dict()
+
+    def get_record_by_id(self, record_id: UUID) -> dict | None:
+        record = self.db_session.query(RecordModel).get(record_id)
+
+        return record.model_to_dict() if record else None

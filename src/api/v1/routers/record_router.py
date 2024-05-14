@@ -46,3 +46,29 @@ async def add_challenge_point(
     result = service.add_challenge_point(record_id)
 
     return JSONResponse(content=result, status_code=200)
+
+
+@record_router.put(
+    "/comodindindin",
+    response_model=Optional[RecordSchema],
+)
+async def comodindindin(
+    record_id: UUID,
+    comodindindin: int,
+    db_session: Session = Depends(get_session),
+):
+    service = RecordService(db_session)
+    result = service.comodindindin(record_id, comodindindin)
+
+    return JSONResponse(content=result, status_code=200)
+
+
+@record_router.get("/{record_id}", response_model=List[RecordSchema])
+async def get_record_by_id(
+    record_id: UUID,
+    db_session: Session = Depends(get_session),
+):
+    service = RecordService(db_session)
+    result = service.get_record_by_id(record_id)
+
+    return JSONResponse(content=result, status_code=200)
