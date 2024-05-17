@@ -38,14 +38,14 @@ class RecordService:
 
         return record.model_to_dict() if record else None
 
-    def add_challenge_point(self, record_id: UUID) -> dict | None:
+    def add_challenge_point(self, record_id: UUID, amount: int) -> dict | None:
         try:
             record: RecordModel = self.db_session.query(RecordModel).get(record_id)
 
             if not record:
                 return None
 
-            record.challenge_points += 1
+            record.challenge_points += amount
 
             self.db_session.commit()
 

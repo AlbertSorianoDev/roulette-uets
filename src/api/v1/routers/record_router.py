@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from fastapi.responses import JSONResponse
 from typing import List, Optional
 from sqlalchemy.orm import Session
@@ -40,10 +40,15 @@ async def get_record_by_game_id_and_participant_id(
 )
 async def add_challenge_point(
     record_id: UUID,
+    amount: int = Query(
+        ...,
+        ge=1,
+        description="The amount to add, must be an integer greater than or equal to 1",
+    ),
     db_session: Session = Depends(get_session),
 ):
     service = RecordService(db_session)
-    result = service.add_challenge_point(record_id)
+    result = service.add_challenge_point(record_id, amount)
 
     return JSONResponse(content=result, status_code=200)
 
