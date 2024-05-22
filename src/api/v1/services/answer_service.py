@@ -45,7 +45,7 @@ class AnswerService:
             )
 
             if option_model.is_correct:
-                record_model.score += 1
+                record_model.score += 2
 
                 self.db_session.flush()
 
