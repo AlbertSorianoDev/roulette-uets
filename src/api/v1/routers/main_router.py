@@ -10,7 +10,8 @@ from src.api.v1.routers.participant_router import participant_router
 from src.api.v1.routers.record_router import record_router
 from src.api.v1.routers.answer_router import answer_router
 
-api_v1_router = APIRouter(prefix="/api/v1")
+api_v1_router = APIRouter()
+
 api_v1_router.include_router(subject_router)
 api_v1_router.include_router(question_router)
 api_v1_router.include_router(option_router)
