@@ -1,7 +1,9 @@
-from decouple import config
+from decouple import Config, RepositoryEnv
 from sqlalchemy import create_engine
 from sqlalchemy.orm.session import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+
+config = Config(RepositoryEnv(".env"))
 
 engine = create_engine(
     "{engine}://{user}:{password}@{host}:{port}/{database}".format(

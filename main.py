@@ -13,7 +13,7 @@ tags_metadata = [
         "description": "API version 1, check link on the right",
         "externalDocs": {
             "description": "sub-docs",
-            "url": "http://127.0.0.1/api/v1/docs",
+            "url": "/api/v1/docs",
         },
     },
     {
@@ -21,7 +21,7 @@ tags_metadata = [
         "description": "API version 2, check link on the right",
         "externalDocs": {
             "description": "sub-docs",
-            "url": "http://127.0.0.1/api/v2/docs",
+            "url": "/api/v2/docs",
         },
     },
 ]
@@ -53,4 +53,4 @@ async def index():
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
